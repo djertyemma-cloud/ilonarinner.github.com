@@ -1,0 +1,321 @@
+/* ==========================================================================
+   1. RESET & INTERFACE SOMBRE PRO
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #0D0D0D;
+    color: #FFFFFF;
+    line-height: 1.5;
+    padding-top: 80px;
+    padding-bottom: 260px; /* Plus d'espace car la timeline multi-pistes est plus haute */
+}
+
+.rec-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #FF3B30;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+.status-badge {
+    background: #1A1A1A;
+    border: 1px solid #2C2C2C;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: #A3A3A3;
+}
+
+/* ==========================================================================
+   2. BARRE DE NAVIGATION
+   ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 6%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #1F1F1F;
+    z-index: 1000;
+}
+
+.logo-area {
+    font-weight: 800;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.btn-nav-contact {
+    background-color: #FFFFFF;
+    color: #0D0D0D;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   3. HERO BLOC & COMPTEUR ECRAN
+   ========================================================================== */
+.hero-section {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    padding: 60px 6%;
+    align-items: center;
+    min-height: 50vh;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin-bottom: 25px;
+}
+
+.hero-content h1 span.box {
+    border: 2px solid #FFFFFF;
+    padding: 0 12px;
+    display: inline-block;
+}
+
+.subtitle {
+    color: #A3A3A3;
+    font-size: 1.1rem;
+    max-width: 500px;
+}
+
+.monitor-panel {
+    background-color: #161616;
+    border: 1px solid #2C2C2C;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.timecode-display {
+    font-family: monospace;
+    font-size: 3.2rem;
+    font-weight: 700;
+    text-align: right;
+    margin: 20px 0;
+    letter-spacing: 1px;
+}
+
+/* Blocs Projets */
+.projects-section {
+    padding: 60px 6%;
+    border-top: 1px solid #1F1F1F;
+}
+
+.projects-section h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+.project-card {
+    background-color: #161616;
+    border: 1px solid #2C2C2C;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    transition: all 0.3s ease;
+}
+
+/* Contours colorés lumineux spécifiques pour la sélection des projets */
+.project-card.card-p1.active { border-color: #1ABC9C; box-shadow: 0 0 20px rgba(26, 188, 156, 0.2); }
+.project-card.card-p2.active { border-color: #3498DB; box-shadow: 0 0 20px rgba(52, 152, 219, 0.2); }
+.project-card.card-p3.active { border-color: #F27A37; box-shadow: 0 0 20px rgba(242, 122, 55, 0.2); }
+
+.video-wrapper video {
+    width: 100%;
+    border-radius: 6px;
+    background-color: #000;
+}
+
+/* ==========================================================================
+   4. TIMELINE DE MONTAGE AVANCEE MULTI-COUCHE (V1, V2, V3, A1)
+   ========================================================================== */
+.timeline-editor {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #141414;
+    border-top: 2px solid #2C2C2C;
+    padding: 10px 20px 20px 20px;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+    z-index: 999;
+    user-select: none;
+}
+
+/* Règle de temps avec repères gradués */
+.time-ruler {
+    position: relative;
+    height: 25px;
+    background-color: #181818;
+    border-bottom: 1px solid #262626;
+    margin-bottom: 10px;
+    cursor: ew-resize; /* Curseur d'ajustement temporel */
+}
+
+.time-mark {
+    position: absolute;
+    top: 4px;
+    font-family: monospace;
+    font-size: 0.7rem;
+    color: #555555;
+    transform: translateX(-50%);
+}
+
+.timeline-tracks {
+    position: relative;
+    background-color: #0A0A0A;
+    border: 1px solid #222222;
+    padding: 12px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.track-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.track-label {
+    width: 30px;
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: #444444;
+    font-weight: bold;
+}
+
+.track-content {
+    flex: 1;
+    display: flex;
+    position: relative;
+    height: 34px; /* Hauteur ajustée pour accueillir 4 pistes empilées */
+    background-color: rgba(255, 255, 255, 0.01);
+    border-radius: 3px;
+}
+
+/* Les cases de clips vidéo */
+.timeline-clip {
+    position: absolute;
+    top: 1px;
+    height: 32px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-family: monospace;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: filter 0.2s;
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Teintes spécifiques des clips de montage */
+.timeline-clip.p1 { background-color: rgba(26, 188, 156, 0.25); border: 1px solid #1ABC9C; color: #1ABC9C; }
+.timeline-clip.p2 { background-color: rgba(52, 152, 219, 0.25); border: 1px solid #3498DB; color: #3498DB; }
+.timeline-clip.p3 { background-color: rgba(242, 122, 55, 0.25); border: 1px solid #F27A37; color: #F27A37; }
+.timeline-clip.broll-clip { background-color: rgba(243, 156, 18, 0.25); border: 1px solid #F39C12; color: #F39C12; }
+.timeline-clip.text-fx { background-color: rgba(255, 255, 255, 0.05); border: 1px solid #444444; color: #A3A3A3; }
+
+.timeline-clip:hover {
+    filter: brightness(1.25);
+}
+
+/* Piste Audio Verte (Ondes A1) */
+.audio-track {
+    height: 28px;
+    align-items: center;
+}
+
+.audio-wave {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    width: 100%;
+    height: 100%;
+    padding: 0 5px;
+}
+
+.audio-wave span {
+    flex: 1;
+    background-color: #00FF66; /* Vert ondes audio */
+    border-radius: 1px;
+}
+
+/* Simulation graphique des niveaux de volume */
+.audio-wave span:nth-child(3n) { height: 50%; }
+.audio-wave span:nth-child(3n+1) { height: 80%; }
+.audio-wave span:nth-child(3n+2) { height: 25%; }
+
+/* LA TIMELINE TÊTE DE LECTURE ROUGE FIXE AU CLIC & GLISSER */
+.playhead {
+    position: absolute;
+    top: -35px; /* Monte sur la règle temporelle */
+    left: 42px; /* Aligné au début des pistes */
+    width: 2px;
+    height: 185px; /* Couvre toutes les pistes empilées */
+    background-color: #FF3B30;
+    pointer-events: none; /* Laisse passer le clic pour manipuler les pistes dessous */
+    z-index: 10;
+    transition: none; /* Fluidité instantanée lors du dragging */
+}
+
+/* Le triangle supérieur de l'aiguille de montage */
+.playhead::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -5px;
+    width: 12px;
+    height: 8px;
+    background-color: #FF3B30;
+    border-radius: 0 0 4px 4px;
+}
+
+/* Responsive Tablettes et Mobiles */
+@media (max-width: 900px) {
+    .hero-section, .project-card { grid-template-columns: 1fr; }
+    .timeline-editor { display: none; }
+    body { padding-bottom: 20px; }
+}
